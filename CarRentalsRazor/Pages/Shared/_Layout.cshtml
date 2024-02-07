@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - CarRentalsRazor</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/CarRentalsRazor.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <div>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <ul>
+                <li>
+                    <a class="nav-link" asp-area="" asp-page="/Index">Home</a>
+                </li>
+                @if (Models.CurrentUser.IsAdmin)
+                {
+                    <li>
+                        <a class="nav-link text-dark" asp-area="" asp-page="/Customers/Index">Customers</a>
+                    </li>
+                }
+                <li>
+                    <a class="nav-link" asp-area="" asp-page="/Cars/Index">Cars</a>
+                </li>
+                @if (Models.CurrentUser.IsLoggedIn)
+                {
+                    <li>
+                        <a class="nav-link text-dark" asp-area="" asp-page="/Bookings/Index">Bookings</a>
+                    </li>
+                }
+                @if (!Models.CurrentUser.IsLoggedIn)
+                {
+                    <li>
+                        <a class="nav-link text-dark" asp-area="" asp-page="/Customers/Login">Login</a>
+                    </li>
+                }
+                @if (Models.CurrentUser.IsLoggedIn)
+                {
+                    <li>
+                        <a class="nav-link text-dark" asp-area="" asp-page="/Logout/Index">Logout</a>
+                    </li>
+                }
+            </ul>
+        </nav>
+    </div>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2024 - CarRentalsRazor - <a asp-area="" asp-page="/Privacy">Privacy</a>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

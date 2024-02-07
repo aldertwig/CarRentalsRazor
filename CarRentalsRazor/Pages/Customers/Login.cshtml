@@ -1,0 +1,78 @@
+﻿@page
+@model CarRentalsRazor.Pages.Customers.LoginModel
+@{
+    ViewData["Title"] = "Login";
+}
+
+<div class="login-row">
+    <div class="login-form">
+        <h2>Login:</h2>
+        <form method="post" asp-page-handler="login">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="LoginRequest.Email" class="control-label"></label>
+                <input asp-for="LoginRequest.Email" class="form-control" />
+                <span asp-validation-for="LoginRequest.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LoginRequest.Password" class="control-label"></label>
+                <input asp-for="LoginRequest.Password" type="password" class="form-control" />
+                <span asp-validation-for="LoginRequest.Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Login" class="btn btn-primary" />
+            </div>
+        </form>
+        <br>
+        @if (!string.IsNullOrEmpty(Model.LoginErrorMessage))
+        {
+            <div class="alert-danger">
+                <strong>Error!</strong> @Model.LoginErrorMessage
+                <button class="close alert" onclick="$(this).parent().remove();">Close</button>
+            </div>
+        }
+    </div>
+    <br>
+    <div class="register-form">
+        <h2>Register:</h2>
+        <form method="post" asp-page-handler="register">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Customer.FirstName" class="control-label"></label>
+                <input asp-for="Customer.FirstName" class="form-control" />
+                <span asp-validation-for="Customer.FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Customer.LastName" class="control-label"></label>
+                <input asp-for="Customer.LastName" class="form-control" />
+                <span asp-validation-for="Customer.LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Customer.Password" class="control-label"></label>
+                <input asp-for="Customer.Password" type="password" class="form-control" />
+                <span asp-validation-for="Customer.Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Customer.Email" class="control-label"></label>
+                <input asp-for="Customer.Email" class="form-control" />
+                <span asp-validation-for="Customer.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group-button">
+                <button type="submit"><i class="fa fa-check" style="color:green"></i> Register</button>
+            </div>
+        </form>
+        <br>
+        @if (!string.IsNullOrEmpty(Model.RegisterErrorMessage))
+        {
+            <div class="alert-danger">
+                <strong>Error!</strong> @Model.RegisterErrorMessage
+                <button class="close alert" onclick="$(this).parent().remove();">Close</button>
+            </div>
+        }
+    </div>
+    @section Scripts {
+        @{
+            await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        }
+    }
+</div>

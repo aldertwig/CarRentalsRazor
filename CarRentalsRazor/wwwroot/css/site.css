@@ -1,0 +1,165 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+  margin: 0;
+}
+
+p {
+    font-size: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    margin: 0;
+    background-color: dimgrey;
+    min-height: 100vh;
+}
+
+main {
+    margin: auto;
+    max-width: 1200px;
+    height: 100%;
+    padding-bottom: 30px;
+    padding: 2%;
+    background-color: white;
+    background-image: url("/resources/fribergcarlrentals.png");
+    background-size: cover;
+    min-height: 100vh;
+}
+
+.navbar {
+    background-color: orangered;
+    font-size: 30px;
+    text-align: center;
+}
+
+/* CSS for navigation */
+nav {
+    font-size: 30px;
+    padding: 0px 10px;
+    background-color: orangered;
+    text-align: center;
+}
+
+nav ul {
+    margin: 0;
+    list-style-type: none;
+    overflow: hidden;
+    padding: 3px 0px;
+}
+
+nav a {
+    text-decoration: none;
+    color: white;
+    display: block;
+    text-align: center;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+nav li {
+    display: inline-block;
+}
+
+nav li a {
+    display: block;
+    text-decoration: none;
+    border-radius: 2px;
+    padding: 5px 10px;
+}
+
+.nav-link {
+    color: white;
+}
+
+.nav-link:hover {
+    text-decoration: underline;
+}
+
+/*td {
+    font-size: 20px; 
+    border: 2px solid;
+}*/
+img {
+    max-width:500px;
+}
+/* CSS for div */
+div {
+    position: relative;
+}
+
+text-danger field-validation-error {
+    color: red;
+}
+
+field-validation-error {
+    color: red;
+}
+
+.login-row {
+    align-content: center;
+}
+
+.row {
+    border: solid;
+    max-width: 600px;
+    /*float: left;*/
+    padding: 2%;
+    background-color: white;
+}
+
+.login-form {
+    border: solid;
+    max-width: 600px;
+    /*float: left;*/
+    padding: 2%;
+    background-color: white;
+}
+
+.register-form {
+    border: solid;
+    max-width: 600px;
+    padding: 2%;
+    background-color: white;
+}
+
+.alert-danger {
+    border: 2px solid darkred;
+    border-radius: 10px;
+    background-color: rgba(255, 0, 0, 0.2);
+    padding: 2%;
+}
+
+.close.alert {
+    position: absolute;
+    right: 10px;
+}
+
+.table {
+    font-size: 20px;
+    border: solid;
+    max-width: 600px;
+    /*float: left;*/
+    padding: 2%;
+    background-color: white;
+}
+
+footer {
+    background-color: orangered;
+}

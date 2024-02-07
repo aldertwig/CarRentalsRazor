@@ -1,0 +1,49 @@
+﻿@page
+@model CarRentalsRazor.Pages.Bookings.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Booking</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Booking.CarId" class="control-label"></label>
+                <input asp-for="Booking.CarId" class="form-control" value="@Model.CarId" readonly />
+                <span asp-validation-for="Booking.CarId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Booking.Email" class="control-label"></label>
+                <input asp-for="Booking.Email" class="form-control" value="@Models.CurrentUser.Email" readonly />
+                <span asp-validation-for="Booking.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Booking.RentalStart" class="control-label"></label>
+                <input asp-for="Booking.RentalStart" class="form-control" />
+                <span asp-validation-for="Booking.RentalStart" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Booking.RentalEnd" class="control-label"></label>
+                <input asp-for="Booking.RentalEnd" class="form-control" />
+                <span asp-validation-for="Booking.RentalEnd" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <button type="submit"><i class="fa fa-check" style="color:green"></i> Create</button>
+            </div>
+        </form>
+    </div>
+    <div>
+        <a asp-page="/Cars/Index">Back to List</a>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
