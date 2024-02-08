@@ -1,19 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using CarRentalsRazor.Data;
 using CarRentalsRazor.Models;
 
 namespace CarRentalsRazor.Pages.Bookings
 {
     public class DeleteModel : PageModel
     {
-        private readonly CarRentalsRazor.Data.ApplicationDbContext _context;
+        private readonly Data.ApplicationDbContext _context;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        [BindProperty]
+        public Booking Booking { get; set; } = default!;
+        public string ErrorMessage { get; set; } = string.Empty;
 
         public DeleteModel(CarRentalsRazor.Data.ApplicationDbContext context, IHttpContextAccessor httpContextAccessor)
         {
@@ -21,21 +19,20 @@ namespace CarRentalsRazor.Pages.Bookings
             _httpContextAccessor = httpContextAccessor;
         }
 
-        [BindProperty]
-        public Booking Booking { get; set; } = default!;
-
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null || _context.Bookings == null)
             {
-                return NotFound();
+                ErrorMessage = "Delete booking failed.";
+                return Page();
             }
 
             var booking = await _context.Bookings.FirstOrDefaultAsync(b => b.Id == id);
 
             if (booking == null)
             {
-                return NotFound();
+                ErrorMessage = "Delete booking failed. Booking not found.";
+                return Page();
             }
             else 
             {
@@ -48,7 +45,8 @@ namespace CarRentalsRazor.Pages.Bookings
         {
             if (id == null || _context.Bookings == null)
             {
-                return NotFound();
+                ErrorMessage = "Delete booking failed.";
+                return Page();
             }
             var booking = await _context.Bookings.FindAsync(id);
 
@@ -64,7 +62,7 @@ namespace CarRentalsRazor.Pages.Bookings
                 }
                 await _context.SaveChangesAsync();
             }
-
+            TempData["SuccessMessage"] = "Booking deleted successfully.";
             return RedirectToPage("./Index");
         }
     }

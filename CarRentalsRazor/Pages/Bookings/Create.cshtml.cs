@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using CarRentalsRazor.Data;
 using CarRentalsRazor.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,14 +7,14 @@ namespace CarRentalsRazor.Pages.Bookings
 {
     public class CreateModel : PageModel
     {
-        private readonly CarRentalsRazor.Data.ApplicationDbContext _context;
+        private readonly Data.ApplicationDbContext _context;
         private readonly IHttpContextAccessor _httpContextAccessor;
         [BindProperty]
         public Booking Booking { get; set; } = default!;
         public int? CarId { get; set; }
         public string ErrorMessage { get; set; } = string.Empty;
 
-        public CreateModel(CarRentalsRazor.Data.ApplicationDbContext context, IHttpContextAccessor httpContextAccessor)
+        public CreateModel(Data.ApplicationDbContext context, IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
             _httpContextAccessor = httpContextAccessor;
@@ -31,16 +25,17 @@ namespace CarRentalsRazor.Pages.Bookings
         {
             if (id == null || _context.Cars == null)
             {
-                return NotFound();
+                ErrorMessage = "Create booking failed.";
+                return Page();
             }
             var car = await _context.Cars.FirstOrDefaultAsync(m => m.Id == id);
             if (car == null)
             {
-                return NotFound();
+                ErrorMessage = "Create booking failed. Car not found.";
+                return Page();
             }
             CarId = car.Id;
             CurrentUser.LastCarLookedAtId = car.Id;
-            //_httpContextAccessor.HttpContext.Response.Cookies.Append("BookingCarId", car.Id.ToString());
             if (CurrentUser.IsLoggedIn)
             {
                 return Page();
@@ -56,6 +51,7 @@ namespace CarRentalsRazor.Pages.Bookings
         {
             if (!ModelState.IsValid || _context.Bookings == null || Booking == null)
             {
+                ErrorMessage = "Create booking failed.";
                 return Page();
             }
             _context.Bookings.Add(Booking);
@@ -67,7 +63,7 @@ namespace CarRentalsRazor.Pages.Bookings
                 _context.Attach(car).State = EntityState.Modified;
             }
             await _context.SaveChangesAsync();
-
+            TempData["SuccessMessage"] = "Booking created successfully.";
             return RedirectToPage("./Index");
         }
     }

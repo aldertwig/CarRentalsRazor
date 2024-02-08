@@ -41,15 +41,14 @@ main {
     min-height: 100vh;
 }
 
+/* CSS for navigation */
 .navbar {
     background-color: orangered;
-    font-size: 30px;
+    font-size: 40px;
     text-align: center;
 }
 
-/* CSS for navigation */
 nav {
-    font-size: 30px;
     padding: 0px 10px;
     background-color: orangered;
     text-align: center;
@@ -92,10 +91,6 @@ nav li a {
     text-decoration: underline;
 }
 
-/*td {
-    font-size: 20px; 
-    border: 2px solid;
-}*/
 img {
     max-width:500px;
 }
@@ -117,9 +112,9 @@ field-validation-error {
 }
 
 .row {
+    font-size: 20px;
     border: solid;
     max-width: 600px;
-    /*float: left;*/
     padding: 2%;
     background-color: white;
 }
@@ -127,7 +122,6 @@ field-validation-error {
 .login-form {
     border: solid;
     max-width: 600px;
-    /*float: left;*/
     padding: 2%;
     background-color: white;
 }
@@ -137,6 +131,14 @@ field-validation-error {
     max-width: 600px;
     padding: 2%;
     background-color: white;
+}
+
+/* CSS for alerts */
+.alert-success {
+    border: 2px solid darkgreen;
+    border-radius: 10px;
+    background-color: rgba(0, 128, 0, 0.2);
+    padding: 2%;
 }
 
 .alert-danger {
@@ -155,7 +157,6 @@ field-validation-error {
     font-size: 20px;
     border: solid;
     max-width: 600px;
-    /*float: left;*/
     padding: 2%;
     background-color: white;
 }

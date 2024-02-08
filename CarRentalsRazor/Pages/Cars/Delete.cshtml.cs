@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using CarRentalsRazor.Models;
@@ -13,6 +11,7 @@ namespace CarRentalsRazor.Pages.Cars
         private readonly IHttpContextAccessor _httpContextAccessor;
         [BindProperty]
         public Car Car { get; set; } = default!;
+        public string ErrorMessage { get; set; } = string.Empty;
 
         public DeleteModel(Data.ApplicationDbContext context, IHttpContextAccessor httpContextAccessor)
         {
@@ -24,14 +23,16 @@ namespace CarRentalsRazor.Pages.Cars
         {
             if (id == null || _context.Cars == null)
             {
-                return NotFound();
+                ErrorMessage = "Delete car failed.";
+                return Page();
             }
 
             var car = await _context.Cars.FirstOrDefaultAsync(m => m.Id == id);
 
             if (car == null)
             {
-                return NotFound();
+                ErrorMessage = "Delete car failed. Car not found.";
+                return Page();
             }
             else 
             {
@@ -44,7 +45,8 @@ namespace CarRentalsRazor.Pages.Cars
         {
             if (id == null || _context.Cars == null)
             {
-                return NotFound();
+                ErrorMessage = "Delete car failed.";
+                return Page();
             }
             var car = await _context.Cars.FindAsync(id);
 
@@ -54,7 +56,7 @@ namespace CarRentalsRazor.Pages.Cars
                 _context.Cars.Remove(Car);
                 await _context.SaveChangesAsync();
             }
-
+            TempData["SuccessMessage"] = "Car deleted successfully.";
             return RedirectToPage("./Index");
         }
     }

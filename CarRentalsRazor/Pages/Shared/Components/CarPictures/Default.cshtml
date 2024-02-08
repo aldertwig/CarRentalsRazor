@@ -29,13 +29,18 @@
             <tr>
                 <td>
                     <img class="car-picture" src=@Html.DisplayFor(modelItem => item.PictureUrl) alt="Picture" />
-                </td>
-                <td>
                     @if (Models.CurrentUser.IsAdmin)
                     {
                         <a asp-page="/CarPictures/Delete" asp-route-id="@item.Id">Delete Picture</a>
                     }
+                    <br>
                 </td>
+                @* <td>
+                    @if (Models.CurrentUser.IsAdmin)
+                    {
+                        <a asp-page="/CarPictures/Delete" asp-route-id="@item.Id">Delete Picture</a>
+                    }
+                </td> *@
             </tr>
         }
     </tbody>

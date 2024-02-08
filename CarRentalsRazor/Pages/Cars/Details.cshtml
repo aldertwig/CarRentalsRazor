@@ -6,10 +6,8 @@
 }
 
 <h1>Car Details</h1>
-
-<div>
-    <hr />
-    <dl class="row">
+<div class="row"">
+    <dl>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Car.Brand)
         </dt>
@@ -49,4 +47,12 @@
             <a asp-page="./Index">Back to List</a>
         </div>
     </dl>
+    <br>
+    @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+    {
+        <div class="alert-danger">
+            <strong>Error!</strong> @Model.ErrorMessage
+            <button class="close alert" onclick="$(this).parent().remove();">Close</button>
+        </div>
+    }
 </div>

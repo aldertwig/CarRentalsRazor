@@ -6,7 +6,6 @@
 }
 
 <h1>Create Car</h1>
-<hr />
 <div class="row">
     <div class="col-md-4">
         <form method="post">
@@ -42,9 +41,15 @@
             </div>
         </form>
     </div>
+    <br>
+    @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+    {
+        <div class="alert-danger">
+            <strong>Error!</strong> @Model.ErrorMessage
+            <button class="close alert" onclick="$(this).parent().remove();">Close</button>
+        </div>
+    }
 </div>
-
-
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

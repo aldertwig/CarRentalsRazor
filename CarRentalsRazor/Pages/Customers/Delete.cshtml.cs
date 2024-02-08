@@ -1,40 +1,38 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using CarRentalsRazor.Data;
 using CarRentalsRazor.Models;
 
 namespace CarRentalsRazor.Pages.Customers
 {
     public class DeleteModel : PageModel
     {
-        private readonly CarRentalsRazor.Data.ApplicationDbContext _context;
+        private readonly Data.ApplicationDbContext _context;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        [BindProperty]
+        public Customer Customer { get; set; } = default!;
+        public string ErrorMessage { get; set; } = string.Empty;
 
-        public DeleteModel(CarRentalsRazor.Data.ApplicationDbContext context)
+        public DeleteModel(Data.ApplicationDbContext context, IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
+            _httpContextAccessor = httpContextAccessor;
         }
-
-        [BindProperty]
-      public Customer Customer { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null || _context.Customers == null)
             {
-                return NotFound();
+                ErrorMessage = "Delete customer failed.";
+                return Page();
             }
 
             var customer = await _context.Customers.FirstOrDefaultAsync(m => m.Id == id);
 
             if (customer == null)
             {
-                return NotFound();
+                ErrorMessage = "Delete customer failed. Customer not found.";
+                return Page();
             }
             else 
             {
@@ -47,7 +45,8 @@ namespace CarRentalsRazor.Pages.Customers
         {
             if (id == null || _context.Customers == null)
             {
-                return NotFound();
+                ErrorMessage = "Delete customer failed.";
+                return Page();
             }
             var customer = await _context.Customers.FindAsync(id);
 
@@ -58,6 +57,7 @@ namespace CarRentalsRazor.Pages.Customers
                 await _context.SaveChangesAsync();
             }
 
+            TempData["SuccessMessage"] = "Customer deleted successfully.";
             return RedirectToPage("./Index");
         }
     }

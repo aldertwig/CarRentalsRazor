@@ -3,58 +3,65 @@
 
 @{
     ViewData["Title"] = "Index";
-    string isAdmin = (String)ViewData["IsAdmin"];
-    bool IsAdmin = (String)ViewData["IsAdmin"] == true.ToString();
 }
 
 <h1>Cars</h1>
-
-@if (Models.CurrentUser.IsAdmin)
-{
-    <p>
-        <a asp-page="Create">Create New</a>
-    </p>
-}
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Car[0].Brand)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Car[0].Model)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Car[0].Capacity)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Car[0].RentPerDay)
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.Car)
-        {
+<div class="row">
+    @if (Models.CurrentUser.IsAdmin)
+    {
+        <p>
+            <a asp-page="Create">Create New</a>
+        </p>
+    }
+    <table class="table">
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Brand)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Model)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Capacity)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.RentPerDay)
-                </td>
-                <td>
-                    @if (!Models.CurrentUser.IsAdmin) { <a asp-page="/Bookings/Create" asp-page-handler="Get" asp-route-id="@item.Id">Book</a> }
-                    @if (Models.CurrentUser.IsAdmin) { <a asp-page="/Cars/Edit" asp-route-id="@item.Id">Edit</a> }
-                    <a asp-page="/Cars/Details" asp-route-id="@item.Id">Details</a>
-                    @if (Models.CurrentUser.IsAdmin) { <a asp-page="/Cars/Delete" asp-route-id="@item.Id">Delete</a> }
-                </td>
+                <th>
+                    @Html.DisplayNameFor(model => model.Car[0].Brand)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Car[0].Model)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Car[0].Capacity)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Car[0].RentPerDay)
+                </th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Car)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Brand)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Model)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Capacity)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RentPerDay)
+                    </td>
+                    <td>
+                        @if (!Models.CurrentUser.IsAdmin) { <a asp-page="/Bookings/Create" asp-page-handler="Get" asp-route-id="@item.Id">Book</a> }
+                        @if (Models.CurrentUser.IsAdmin) { <a asp-page="/Cars/Edit" asp-route-id="@item.Id">Edit</a> }
+                        <a asp-page="/Cars/Details" asp-route-id="@item.Id">Details</a>
+                        @if (Models.CurrentUser.IsAdmin) { <a asp-page="/Cars/Delete" asp-route-id="@item.Id">Delete</a> }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <br>
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert-success">
+            <strong>Success!</strong> @TempData["SuccessMessage"]
+            <button class="close alert" onclick="$(this).parent().remove();">Close</button>
+        </div>
+    }
+</div>

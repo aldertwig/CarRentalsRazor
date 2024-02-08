@@ -1,40 +1,37 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using CarRentalsRazor.Data;
 using CarRentalsRazor.Models;
 
 namespace CarRentalsRazor.Pages.Bookings
 {
     public class EditModel : PageModel
     {
-        private readonly CarRentalsRazor.Data.ApplicationDbContext _context;
+        private readonly Data.ApplicationDbContext _context;
         private readonly IHttpContextAccessor _httpContextAccessor;
-
-        public EditModel(CarRentalsRazor.Data.ApplicationDbContext context)
-        {
-            _context = context;
-        }
-
         [BindProperty]
         public Booking Booking { get; set; } = default!;
+        public string ErrorMessage { get; set; } = string.Empty;
+
+        public EditModel(Data.ApplicationDbContext context, IHttpContextAccessor httpContextAccessor)
+        {
+            _context = context;
+            _httpContextAccessor = httpContextAccessor;
+        }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null || _context.Bookings == null)
             {
-                return NotFound();
+                ErrorMessage = "Edit booking failed.";
+                return Page();
             }
 
             var booking =  await _context.Bookings.FirstOrDefaultAsync(b => b.Id == id);
             if (booking == null)
             {
-                return NotFound();
+                ErrorMessage = "Edit booking failed. Booking not found";
+                return Page();
             }
             Booking = booking;
             return Page();
@@ -46,6 +43,7 @@ namespace CarRentalsRazor.Pages.Bookings
         {
             if (!ModelState.IsValid)
             {
+                ErrorMessage = "Edit booking failed.";
                 return Page();
             }
 
@@ -59,14 +57,15 @@ namespace CarRentalsRazor.Pages.Bookings
             {
                 if (!BookingExists(Booking.CarId))
                 {
-                    return NotFound();
+                    ErrorMessage = "Edit booking failed. Booking not found";
+                    return Page();
                 }
                 else
                 {
                     throw;
                 }
             }
-
+            TempData["SuccessMessage"] = "Booking edited successfully.";
             return RedirectToPage("./Index");
         }
 

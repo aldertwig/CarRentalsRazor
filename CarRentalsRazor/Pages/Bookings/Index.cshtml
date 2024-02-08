@@ -6,46 +6,55 @@
 }
 
 <h1>Bookings</h1>
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Booking[0].CarId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Booking[0].Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Booking[0].RentalStart)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Booking[0].RentalEnd)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.Booking) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.CarId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RentalStart)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RentalEnd)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<div class ="row">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Booking[0].CarId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Booking[0].Email)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Booking[0].RentalStart)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Booking[0].RentalEnd)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+    @foreach (var item in Model.Booking) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CarId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RentalStart)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RentalEnd)
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+    }
+        </tbody>
+    </table>
+    <br>
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert-success">
+            <strong>Success!</strong> @TempData["SuccessMessage"]
+            <button class="close alert" onclick="$(this).parent().remove();">Close</button>
+        </div>
+    }
+</div>

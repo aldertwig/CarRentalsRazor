@@ -9,25 +9,29 @@ namespace CarRentalsRazor.Pages.Cars
     {
         private readonly Data.ApplicationDbContext _context;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        public Car Car { get; set; } = default!; 
+        public string ErrorMessage { get; set; } = string.Empty;
 
-        public DetailsModel(Data.ApplicationDbContext context)
+        public DetailsModel(Data.ApplicationDbContext context, IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
+            _httpContextAccessor = httpContextAccessor;
         }
 
-      public Car Car { get; set; } = default!; 
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null || _context.Cars == null)
             {
-                return NotFound();
+                ErrorMessage = "Detailing car failed.";
+                return Page();
             }
 
             var car = await _context.Cars.FirstOrDefaultAsync(m => m.Id == id);
             if (car == null)
             {
-                return NotFound();
+                ErrorMessage = "Detailing car failed. Car not found.";
+                return Page();
             }
             else 
             {

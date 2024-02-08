@@ -9,6 +9,9 @@ namespace CarRentalsRazor.Pages.Cars
     {
         private readonly Data.ApplicationDbContext _context;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        [BindProperty]
+        public Car Car { get; set; } = default!;
+        public string ErrorMessage { get; set; } = string.Empty;
 
         public EditModel(Data.ApplicationDbContext context, IHttpContextAccessor httpContextAccessor)
         {
@@ -16,20 +19,19 @@ namespace CarRentalsRazor.Pages.Cars
             _httpContextAccessor = httpContextAccessor;
         }
 
-        [BindProperty]
-        public Car Car { get; set; } = default!;
-
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null || _context.Cars == null)
             {
-                return NotFound();
+                ErrorMessage = "Edit car failed.";
+                return Page();
             }
 
             var car =  await _context.Cars.FirstOrDefaultAsync(m => m.Id == id);
             if (car == null)
             {
-                return NotFound();
+                ErrorMessage = "Edit car failed. Car not found.";
+                return Page();
             }
             Car = car;
             return Page();
@@ -41,6 +43,7 @@ namespace CarRentalsRazor.Pages.Cars
         {
             if (!ModelState.IsValid)
             {
+                ErrorMessage = "Edit car failed.";
                 return Page();
             }
 
@@ -54,14 +57,15 @@ namespace CarRentalsRazor.Pages.Cars
             {
                 if (!CarExists(Car.Id))
                 {
-                    return NotFound();
+                    ErrorMessage = "Edit car failed. Car not found.";
+                    return Page();
                 }
                 else
                 {
                     throw;
                 }
             }
-
+            TempData["SuccessMessage"] = "Car edited successfully.";
             return RedirectToPage("./Index");
         }
 

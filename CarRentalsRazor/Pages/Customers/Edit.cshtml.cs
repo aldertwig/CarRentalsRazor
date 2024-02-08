@@ -1,40 +1,37 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using CarRentalsRazor.Data;
 using CarRentalsRazor.Models;
 
 namespace CarRentalsRazor.Pages.Customers
 {
     public class EditModel : PageModel
     {
-        private readonly CarRentalsRazor.Data.ApplicationDbContext _context;
+        private readonly Data.ApplicationDbContext _context;
         private readonly IHttpContextAccessor _httpContextAccessor;
-
-        public EditModel(CarRentalsRazor.Data.ApplicationDbContext context)
-        {
-            _context = context;
-        }
-
         [BindProperty]
         public Customer Customer { get; set; } = default!;
+        public string ErrorMessage { get; set; } = string.Empty;
+
+        public EditModel(Data.ApplicationDbContext context, IHttpContextAccessor httpContextAccessor)
+        {
+            _context = context;
+            _httpContextAccessor = httpContextAccessor;
+        }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null || _context.Customers == null)
             {
-                return NotFound();
+                ErrorMessage = "Edit customer failed.";
+                return Page();
             }
 
             var customer =  await _context.Customers.FirstOrDefaultAsync(m => m.Id == id);
             if (customer == null)
             {
-                return NotFound();
+                ErrorMessage = "Edit customer failed. Customer not found.";
+                return Page();
             }
             Customer = customer;
             return Page();
@@ -46,6 +43,7 @@ namespace CarRentalsRazor.Pages.Customers
         {
             if (!ModelState.IsValid)
             {
+                ErrorMessage = "Edit customer failed. Model state is not valid.";
                 return Page();
             }
 
@@ -59,7 +57,8 @@ namespace CarRentalsRazor.Pages.Customers
             {
                 if (!CustomerExists(Customer.Id))
                 {
-                    return NotFound();
+                    ErrorMessage = "Edit customer failed. Customer not found.";
+                    return Page();
                 }
                 else
                 {
@@ -67,8 +66,8 @@ namespace CarRentalsRazor.Pages.Customers
                 }
             }
 
-
-            return RedirectToPage("./Edit");
+            TempData["SuccessMessage"] = "Customer edited successfully.";
+            return RedirectToPage("./Index");
         }
 
         private bool CustomerExists(int id)

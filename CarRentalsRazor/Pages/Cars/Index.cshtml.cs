@@ -8,6 +8,7 @@ namespace CarRentalsRazor.Pages.Cars
     {
         private readonly Data.ApplicationDbContext _context;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        public IList<Car> Car { get;set; } = default!;
 
         public IndexModel(Data.ApplicationDbContext context, IHttpContextAccessor httpContextAccessor)
         {
@@ -15,11 +16,8 @@ namespace CarRentalsRazor.Pages.Cars
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public IList<Car> Car { get;set; } = default!;
-
         public async Task OnGetAsync()
         {
-            ViewData["IsAdmin"] = Request.Cookies["IsAdmin"];
             if (_context.Cars != null)
             {
                 if (CurrentUser.IsAdmin)

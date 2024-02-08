@@ -8,14 +8,13 @@ namespace CarRentalsRazor.Pages.Bookings
     {
         private readonly Data.ApplicationDbContext _context;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        public IList<Booking> Booking { get;set; } = default!;
 
         public IndexModel(Data.ApplicationDbContext context, IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
             _httpContextAccessor = httpContextAccessor;
         }
-
-        public IList<Booking> Booking { get;set; } = default!;
 
         public async Task OnGetAsync()
         {

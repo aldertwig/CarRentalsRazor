@@ -3,56 +3,64 @@
 
 @{
     ViewData["Title"] = "Index";
-    string isAdmin = (String)ViewData["IsAdmin"];
-    bool IsAdmin = (String)ViewData["IsAdmin"] == true.ToString();
 }
 
 <h1>Customers</h1>
-@if (Models.CurrentUser.IsAdmin)
-{
-    <p>
-        <a asp-page="Create">Create New</a>
-    </p>
-}
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Customer[0].FirstName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Customer[0].LastName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Customer[0].Password)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Customer[0].Email)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.Customer) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.FirstName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LastName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Password)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<div class="row">
+    @if (Models.CurrentUser.IsAdmin)
+    {
+        <p>
+            <a asp-page="Create">Create New</a>
+        </p>
+    }
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Customer[0].FirstName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Customer[0].LastName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Customer[0].Password)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Customer[0].Email)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+    @foreach (var item in Model.Customer) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Password)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+    }
+        </tbody>
+    </table>
+    <br>
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert-success">
+            <strong>Success!</strong> @TempData["SuccessMessage"]
+            <button class="close alert" onclick="$(this).parent().remove();">Close</button>
+        </div>
+    }
+</div>

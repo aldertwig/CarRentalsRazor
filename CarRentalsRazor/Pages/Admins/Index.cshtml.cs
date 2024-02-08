@@ -52,14 +52,9 @@ namespace CarRentalsRazor.Pages.Admins
                 CurrentUser.IsAdmin = true;
                 CurrentUser.IsLoggedIn = true;
                 CurrentUser.Email = admin.Email;
-                
-                _httpContextAccessor.HttpContext.Response.Cookies.Append("IsLoggedIn", true.ToString());
-                _httpContextAccessor.HttpContext.Response.Cookies.Append("UserEmail", admin.Email);
-                _httpContextAccessor.HttpContext.Response.Cookies.Append("IsAdmin", true.ToString());
             }
-            // var customer = await _context.Customers.FindAsync(EmailAddress);
 
-            return RedirectToPage("/Customers/Index");
+            return RedirectToPage("/Index");
         }
     }
 }

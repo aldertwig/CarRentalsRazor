@@ -1,21 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using CarRentalsRazor.Data;
 using CarRentalsRazor.Models;
 
 namespace CarRentalsRazor.Pages.Cars
 {
     public class CreateModel : PageModel
     {
-        private readonly CarRentalsRazor.Data.ApplicationDbContext _context;
+        private readonly Data.ApplicationDbContext _context;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        [BindProperty]
+        public Car Car { get; set; } = default!;
+        public string ErrorMessage { get; set; } = string.Empty;
 
-        public CreateModel(CarRentalsRazor.Data.ApplicationDbContext context, IHttpContextAccessor httpContextAccessor)
+        public CreateModel(Data.ApplicationDbContext context, IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
             _httpContextAccessor = httpContextAccessor;
@@ -26,21 +23,18 @@ namespace CarRentalsRazor.Pages.Cars
             return Page();
         }
 
-        [BindProperty]
-        public Car Car { get; set; } = default!;
-        
-
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid || _context.Cars == null || Car == null)
             {
+                ErrorMessage = "Create car failed.";
                 return Page();
             }
 
             _context.Cars.Add(Car);
             await _context.SaveChangesAsync();
-
+            TempData["SuccessMessage"] = "Car created successfully.";
             return RedirectToPage("./Index");
         }
     }
