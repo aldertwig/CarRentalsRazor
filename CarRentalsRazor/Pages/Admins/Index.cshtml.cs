@@ -1,26 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using CarRentalsRazor.Data;
 using CarRentalsRazor.Models;
 
 namespace CarRentalsRazor.Pages.Admins
 {
     public class IndexModel : PageModel
     {
-        private readonly CarRentalsRazor.Data.ApplicationDbContext _context;
-        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly Data.ApplicationDbContext _context;
         [BindProperty]
         public LoginRequest LoginRequest { get; set; } = default!;
         public string ErrorMessage { get; set; } = string.Empty;
 
-        public IndexModel(CarRentalsRazor.Data.ApplicationDbContext context, IHttpContextAccessor httpContextAccessor)
+        public IndexModel(Data.ApplicationDbContext context)
         {
-            _httpContextAccessor = httpContextAccessor;
             _context = context;
         }
 

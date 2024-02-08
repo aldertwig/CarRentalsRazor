@@ -11,14 +11,12 @@ namespace CarRentalsRazor.Pages.Customers
     public class DetailsModel : PageModel
     {
         private readonly Data.ApplicationDbContext _context;
-        private readonly IHttpContextAccessor _httpContextAccessor;
         public Customer Customer { get; set; } = default!;
         public string ErrorMessage { get; set; } = string.Empty;
 
-        public DetailsModel(Data.ApplicationDbContext context, IHttpContextAccessor httpContextAccessor)
+        public DetailsModel(Data.ApplicationDbContext context)
         {
             _context = context;
-            _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<IActionResult> OnGetAsync(int? id)

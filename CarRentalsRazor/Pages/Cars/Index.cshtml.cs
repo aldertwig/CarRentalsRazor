@@ -7,13 +7,11 @@ namespace CarRentalsRazor.Pages.Cars
     public class IndexModel : PageModel
     {
         private readonly Data.ApplicationDbContext _context;
-        private readonly IHttpContextAccessor _httpContextAccessor;
         public IList<Car> Car { get;set; } = default!;
 
-        public IndexModel(Data.ApplicationDbContext context, IHttpContextAccessor httpContextAccessor)
+        public IndexModel(Data.ApplicationDbContext context)
         {
             _context = context;
-            _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task OnGetAsync()

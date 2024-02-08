@@ -2,26 +2,6 @@
 @model List<CarPicture>;
 
 <table class="table">
-    @*< thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.CarPicture[0].Brand)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Car[0].Model)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Car[0].Capacity)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Car[0].RentPerDay)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Car[0].Available)
-            </th>
-            <th></th>
-        </tr>
-    </thead> *@
      <tbody>
         <h2>Pictures</h2>
         @foreach (var item in Model)
@@ -35,12 +15,6 @@
                     }
                     <br>
                 </td>
-                @* <td>
-                    @if (Models.CurrentUser.IsAdmin)
-                    {
-                        <a asp-page="/CarPictures/Delete" asp-route-id="@item.Id">Delete Picture</a>
-                    }
-                </td> *@
             </tr>
         }
     </tbody>

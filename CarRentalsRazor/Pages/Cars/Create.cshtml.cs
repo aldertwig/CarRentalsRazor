@@ -7,15 +7,13 @@ namespace CarRentalsRazor.Pages.Cars
     public class CreateModel : PageModel
     {
         private readonly Data.ApplicationDbContext _context;
-        private readonly IHttpContextAccessor _httpContextAccessor;
         [BindProperty]
         public Car Car { get; set; } = default!;
         public string ErrorMessage { get; set; } = string.Empty;
 
-        public CreateModel(Data.ApplicationDbContext context, IHttpContextAccessor httpContextAccessor)
+        public CreateModel(Data.ApplicationDbContext context)
         {
             _context = context;
-            _httpContextAccessor = httpContextAccessor;
         }
 
         public IActionResult OnGet()

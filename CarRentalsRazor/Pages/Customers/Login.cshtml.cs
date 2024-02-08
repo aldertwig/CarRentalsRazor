@@ -8,7 +8,6 @@ namespace CarRentalsRazor.Pages.Customers
     public class LoginModel : PageModel
     {
         private readonly Data.ApplicationDbContext _context;
-        private readonly IHttpContextAccessor _httpContextAccessor;
         [BindProperty]
         public LoginRequest LoginRequest { get; set; } = default!;
         [BindProperty]
@@ -18,10 +17,9 @@ namespace CarRentalsRazor.Pages.Customers
         public string LoginErrorMessage { get; set; } = string.Empty;
         public string RegisterErrorMessage { get; set; } = string.Empty;
 
-        public LoginModel(Data.ApplicationDbContext context, IHttpContextAccessor httpContextAccessor)
+        public LoginModel(Data.ApplicationDbContext context)
         {
             _context = context;
-            _httpContextAccessor = httpContextAccessor;
         }
 
         public IActionResult OnGet()
@@ -49,13 +47,9 @@ namespace CarRentalsRazor.Pages.Customers
                 LoginErrorMessage = "Login request failed. Wrong password.";
                 return Page();
             }
-            // var customer = await _context.Customers.FindAsync(EmailAddress);
 
             CurrentUser.Email = customer.Email;
             CurrentUser.IsLoggedIn = true;
-            _httpContextAccessor.HttpContext.Response.Cookies.Append("IsLoggedIn", true.ToString());
-            _httpContextAccessor.HttpContext.Response.Cookies.Append("UserEmail", customer.Email);
-            _httpContextAccessor.HttpContext.Response.Cookies.Append("IsAdmin", false.ToString());
 
             if (CurrentUser.RedirectedFromBooking)
             {
@@ -83,12 +77,10 @@ namespace CarRentalsRazor.Pages.Customers
             }
             _context.Customers.Add(Customer);
             await _context.SaveChangesAsync();
+
             CurrentUser.Customer = Customer;
             CurrentUser.Email = Customer.Email;
             CurrentUser.IsLoggedIn = true;
-            _httpContextAccessor.HttpContext.Response.Cookies.Append("IsLoggedIn", true.ToString());
-            _httpContextAccessor.HttpContext.Response.Cookies.Append("UserEmail", Customer.Email);
-            _httpContextAccessor.HttpContext.Response.Cookies.Append("IsAdmin", false.ToString());
 
             if (CurrentUser.RedirectedFromBooking)
             {

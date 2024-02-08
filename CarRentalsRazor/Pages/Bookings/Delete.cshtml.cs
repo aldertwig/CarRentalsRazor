@@ -8,15 +8,13 @@ namespace CarRentalsRazor.Pages.Bookings
     public class DeleteModel : PageModel
     {
         private readonly Data.ApplicationDbContext _context;
-        private readonly IHttpContextAccessor _httpContextAccessor;
         [BindProperty]
         public Booking Booking { get; set; } = default!;
         public string ErrorMessage { get; set; } = string.Empty;
 
-        public DeleteModel(CarRentalsRazor.Data.ApplicationDbContext context, IHttpContextAccessor httpContextAccessor)
+        public DeleteModel(Data.ApplicationDbContext context)
         {
             _context = context;
-            _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<IActionResult> OnGetAsync(int? id)

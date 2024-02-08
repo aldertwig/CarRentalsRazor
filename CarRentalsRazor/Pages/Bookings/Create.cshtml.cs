@@ -8,16 +8,14 @@ namespace CarRentalsRazor.Pages.Bookings
     public class CreateModel : PageModel
     {
         private readonly Data.ApplicationDbContext _context;
-        private readonly IHttpContextAccessor _httpContextAccessor;
         [BindProperty]
         public Booking Booking { get; set; } = default!;
         public int? CarId { get; set; }
         public string ErrorMessage { get; set; } = string.Empty;
 
-        public CreateModel(Data.ApplicationDbContext context, IHttpContextAccessor httpContextAccessor)
+        public CreateModel(Data.ApplicationDbContext context)
         {
             _context = context;
-            _httpContextAccessor = httpContextAccessor;
         }
 
         //public IActionResult OnGetAsync(int id)

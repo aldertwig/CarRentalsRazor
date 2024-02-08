@@ -17,12 +17,6 @@ namespace CarRentalsRazor.Pages
 
         public void OnGet()
         {
-            CookieOptions options = new CookieOptions();
-            options.Secure = true;
-            options.Expires = DateTimeOffset.UtcNow.AddMinutes(10);
-            _httpContextAccessor.HttpContext.Response.Cookies.Append("IsLoggedIn", false.ToString());
-            _httpContextAccessor.HttpContext.Response.Cookies.Append("UserEmail", "");
-            _httpContextAccessor.HttpContext.Response.Cookies.Append("IsAdmin", false.ToString());
         }
     }
 }
